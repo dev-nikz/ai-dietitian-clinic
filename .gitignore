@@ -48,3 +48,6 @@ next-env.d.ts
 
 # real client images for local pitch-mode builds only
 /public/images/pitch/
+
+# local-only override for `vercel --prod` deploys (see comment in the file) - never committed
+.vercelignore
