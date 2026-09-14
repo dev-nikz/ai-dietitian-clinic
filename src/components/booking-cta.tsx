@@ -15,7 +15,7 @@ export function BookingCta() {
       <div className="mx-auto max-w-6xl px-6 py-20 md:py-24">
         <ScrollReveal>
           <span className="font-mono text-xs uppercase tracking-wide text-accent">Book a consultation</span>
-          <h2 className="mt-3 max-w-xl font-display text-3xl md:text-4xl">
+          <h2 className="mt-3 max-w-xl font-display font-semibold text-3xl md:text-4xl">
             Message on WhatsApp, get a slot the same day.
           </h2>
           <p className="mt-3 max-w-lg text-[15px] leading-relaxed text-bg/70">

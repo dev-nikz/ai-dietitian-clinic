@@ -34,7 +34,7 @@ export function Hero() {
             initial={{ opacity: 0, y: 14 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.08, ease: EASE }}
-            className="mt-5 font-display text-5xl leading-[1.05] md:text-6xl"
+            className="mt-5 font-display font-bold text-5xl leading-[1.05] md:text-6xl"
           >
             Evidence, not <em className="text-accent-ink">guesswork.</em>
           </motion.h1>

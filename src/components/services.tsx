@@ -7,7 +7,7 @@ export function Services() {
       <div className="mx-auto max-w-6xl px-6 py-20 md:py-24">
         <ScrollReveal>
           <span className="font-mono text-xs uppercase tracking-wide text-sage">What we treat</span>
-          <h2 className="mt-3 max-w-xl font-display text-3xl md:text-4xl">
+          <h2 className="mt-3 max-w-xl font-display font-semibold text-3xl md:text-4xl">
             Nutrition plans built for a specific condition, not a generic goal.
           </h2>
         </ScrollReveal>
@@ -15,7 +15,7 @@ export function Services() {
           {services.map((service, i) => (
             <ScrollReveal key={service.title} delay={Math.min(i * 0.06, 0.3)}>
               <div className="h-full rounded-2xl border border-line bg-surface p-6">
-                <h3 className="font-display text-xl">{service.title}</h3>
+                <h3 className="font-display font-semibold text-xl">{service.title}</h3>
                 <p className="mt-2.5 text-sm leading-relaxed text-ink-soft">{service.description}</p>
               </div>
             </ScrollReveal>

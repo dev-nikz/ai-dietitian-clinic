@@ -44,7 +44,7 @@ export function BmiCalculator() {
       <div className="mx-auto max-w-3xl px-6 py-20 md:py-24">
         <ScrollReveal>
           <span className="font-mono text-xs uppercase tracking-wide text-sage">Free tool</span>
-          <h2 className="mt-3 font-display text-3xl md:text-4xl">Check where you stand in 10 seconds.</h2>
+          <h2 className="mt-3 font-display font-semibold text-3xl md:text-4xl">Check where you stand in 10 seconds.</h2>
           <p className="mt-3 max-w-lg text-[15px] leading-relaxed text-ink-soft">
             A quick BMI check — not a diagnosis, just a starting point before your first consultation.
           </p>

@@ -7,7 +7,15 @@ import { siteMode } from "./site-mode";
 const paths = {
   headshot: {
     portfolio: "/images/placeholder/headshot.svg",
-    pitch: "/images/pitch/headshot.jpg",
+    pitch: "/images/pitch/hero.png",
+  },
+  aboutPhoto: {
+    portfolio: "/images/placeholder/headshot.svg",
+    pitch: "/images/pitch/about.png",
+  },
+  logo: {
+    portfolio: "", // no logo image in portfolio mode — header falls back to text wordmark
+    pitch: "/images/pitch/logo.png",
   },
 } as const;
 

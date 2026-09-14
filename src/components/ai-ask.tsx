@@ -50,7 +50,7 @@ export function AiAsk() {
       <div className="mx-auto max-w-3xl px-6 py-20 md:py-24">
         <ScrollReveal>
           <span className="font-mono text-xs uppercase tracking-wide text-sage">AI front desk</span>
-          <h2 className="mt-3 font-display text-3xl md:text-4xl">Ask a question, get an answer now.</h2>
+          <h2 className="mt-3 font-display font-semibold text-3xl md:text-4xl">Ask a question, get an answer now.</h2>
           <p className="mt-3 max-w-lg text-[15px] leading-relaxed text-ink-soft">
             Patients get an instant answer instead of waiting for a callback — and every unanswered
             question routes straight to WhatsApp.

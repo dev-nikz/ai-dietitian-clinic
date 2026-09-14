@@ -24,7 +24,9 @@ type SiteContent = {
   aboutHighlights: string[];
   address: string;
   phoneDisplay: string;
+  email: string;
   whatsappNumber: string; // digits only, E.164 without "+"; empty = demo/disabled
+  instagramUrl: string; // empty = hidden
   practoConnected: boolean;
 };
 
@@ -52,7 +54,9 @@ const portfolioContent: SiteContent = {
   ],
   address: "Delhi, India (concept — address shown only in pitch mode)",
   phoneDisplay: "Demo mode — contact number connects here",
+  email: "",
   whatsappNumber: "",
+  instagramUrl: "",
   practoConnected: false,
 };
 
@@ -94,7 +98,9 @@ function pitchContent(): SiteContent {
     aboutHighlights: pitchList(env.NEXT_PUBLIC_PITCH_ABOUT_HIGHLIGHTS, portfolioContent.aboutHighlights),
     address: pitchStr(env.NEXT_PUBLIC_PITCH_ADDRESS, portfolioContent.address),
     phoneDisplay: pitchStr(env.NEXT_PUBLIC_PITCH_PHONE_DISPLAY, portfolioContent.phoneDisplay),
+    email: pitchStr(env.NEXT_PUBLIC_PITCH_EMAIL, portfolioContent.email),
     whatsappNumber: pitchStr(env.NEXT_PUBLIC_PITCH_WHATSAPP_NUMBER, portfolioContent.whatsappNumber),
+    instagramUrl: pitchStr(env.NEXT_PUBLIC_PITCH_INSTAGRAM_URL, portfolioContent.instagramUrl),
     practoConnected: env.NEXT_PUBLIC_PITCH_PRACTO_CONNECTED === "true",
   };
 }
@@ -104,36 +110,49 @@ export function getSiteContent(): SiteContent {
 }
 
 // Service categories are generic clinical offerings, not identifying —
-// safe to share between portfolio and pitch mode.
+// safe to share between portfolio and pitch mode. Matches the real
+// clinic's own specialty list so the pitch demo has full feature parity.
 export const services: Service[] = [
   {
-    title: "Weight Management",
+    title: "Obesity & Weight Loss",
     description:
       "Evidence-based fat-loss and metabolic health plans, adjusted from lab work and progress data — not a fixed calorie sheet.",
   },
   {
-    title: "PCOS & Hormonal Health",
+    title: "Therapeutic Diet",
     description:
-      "Nutrition protocols built around insulin resistance and hormonal markers, coordinated with your gynaecologist or endocrinologist.",
+      "Structured nutrition therapy for diabetes, thyroid, PCOS, and other clinical conditions, coordinated with your treating physician.",
   },
   {
-    title: "Diabetes Nutrition Therapy",
-    description:
-      "Structured meal planning for Type 2 diabetes and prediabetes, focused on stable blood sugar without extreme restriction.",
+    title: "Child Health Diets",
+    description: "Growth-focused nutrition plans for children, built around real eating habits, not rigid rules.",
   },
   {
-    title: "Sports & Performance Nutrition",
-    description:
-      "Fueling and recovery plans for athletes and serious trainees, built around training load and body-composition goals.",
+    title: "Wellness Program",
+    description: "Ongoing preventive nutrition coaching for long-term metabolic and lifestyle health.",
   },
   {
-    title: "Postnatal & Maternal Nutrition",
-    description:
-      "Recovery-focused nutrition for new mothers, balancing energy needs, lactation support, and gradual weight normalization.",
+    title: "Bariatric Diets",
+    description: "Pre- and post-bariatric surgery nutrition support, including advanced bariatric-specific training.",
   },
   {
-    title: "Corporate Wellness Programs",
-    description:
-      "On-site or virtual nutrition workshops and 1:1 consultations for teams, designed around real workplace schedules.",
+    title: "Diet in Geriatric / Old Age",
+    description: "Nutrition plans adapted for aging bodies — bone health, appetite changes, and medication interactions.",
+  },
+  {
+    title: "Skin Health with Pre-Wedding",
+    description: "Nutrition-led skin and wellness prep for pre-wedding timelines.",
+  },
+  {
+    title: "Diet in Pregnancy & Lactation",
+    description: "Maternal nutrition plans balancing energy needs, lactation support, and safe weight management.",
+  },
+  {
+    title: "Gym Diet",
+    description: "Performance and recovery nutrition built around training load and body-composition goals.",
+  },
+  {
+    title: "Weight Gain Diets",
+    description: "Structured plans to gain weight the healthy way, without relying on empty calories.",
   },
 ];
