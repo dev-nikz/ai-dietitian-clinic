@@ -1,5 +1,6 @@
 import { ScrollReveal } from "./scroll-reveal";
 import { getSiteContent } from "@/lib/site-config";
+import { WhatsappIcon } from "./icons";
 
 export function BookingCta() {
   const site = getSiteContent();
@@ -11,7 +12,7 @@ export function BookingCta() {
     : undefined;
 
   return (
-    <section id="book" className="border-t border-line bg-ink text-bg">
+    <section id="book" className="scroll-mt-24 border-t border-line bg-ink text-bg">
       <div className="mx-auto max-w-6xl px-6 py-20 md:py-24">
         <ScrollReveal>
           <span className="font-mono text-xs uppercase tracking-wide text-accent">Book a consultation</span>
@@ -30,8 +31,9 @@ export function BookingCta() {
               href={whatsappHref}
               target="_blank"
               rel="noopener noreferrer"
-              className="rounded-full bg-accent px-7 py-3.5 text-sm font-semibold text-accent-ink transition-transform hover:-translate-y-0.5"
+              className="inline-flex items-center gap-2 rounded-full bg-accent px-7 py-3.5 text-sm font-semibold text-white transition-transform hover:-translate-y-0.5"
             >
+              <WhatsappIcon className="h-4.5 w-4.5" />
               Book on WhatsApp
             </a>
           ) : (

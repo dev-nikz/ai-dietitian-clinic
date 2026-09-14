@@ -26,7 +26,7 @@ export function Enroll() {
   }
 
   return (
-    <section id="enroll" className="border-t border-line">
+    <section id="enroll" className="scroll-mt-24 border-t border-line">
       <div className="mx-auto max-w-3xl px-6 py-20 md:py-24">
         <ScrollReveal>
           <span className="font-mono text-xs uppercase tracking-wide text-sage">Get started</span>

@@ -46,7 +46,7 @@ export function AiAsk() {
   }
 
   return (
-    <section id="ask" className="border-t border-line bg-surface-2">
+    <section id="ask" className="scroll-mt-24 border-t border-line bg-surface-2">
       <div className="mx-auto max-w-3xl px-6 py-20 md:py-24">
         <ScrollReveal>
           <span className="font-mono text-xs uppercase tracking-wide text-sage">AI front desk</span>

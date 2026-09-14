@@ -1,9 +1,11 @@
+import Link from "next/link";
 import { getSiteContent } from "@/lib/site-config";
 import { isPitchMode } from "@/lib/site-mode";
+import { InstagramIcon, WhatsappIcon, FacebookIcon } from "./icons";
 
 export function SiteFooter() {
   const site = getSiteContent();
-  const hasSocials = site.instagramUrl.length > 0 || site.whatsappNumber.length > 0;
+  const hasSocials = site.instagramUrl.length > 0 || site.whatsappNumber.length > 0 || site.facebookUrl.length > 0;
 
   return (
     <footer className="border-t border-line bg-surface-2">
@@ -15,11 +17,11 @@ export function SiteFooter() {
 
         <nav className="flex flex-col gap-2 text-sm text-ink-soft">
           <span className="mb-1 font-mono text-xs uppercase tracking-wide text-ink-faint">Explore</span>
-          <a href="#services" className="hover:text-ink">Services</a>
-          <a href="#about" className="hover:text-ink">About</a>
-          <a href="#ask" className="hover:text-ink">Ask AI</a>
-          <a href="#enroll" className="hover:text-ink">Enroll</a>
-          <a href="#book" className="hover:text-ink">Book a consultation</a>
+          <Link href="/#services" className="hover:text-ink">Services</Link>
+          <Link href="/#about" className="hover:text-ink">About</Link>
+          <Link href="/#ask" className="hover:text-ink">Ask AI</Link>
+          <Link href="/#enroll" className="hover:text-ink">Enroll</Link>
+          <Link href="/#book" className="hover:text-ink">Book a consultation</Link>
         </nav>
 
         <div className="flex flex-col gap-2 text-sm text-ink-soft">
@@ -29,13 +31,30 @@ export function SiteFooter() {
           {site.email && <span>{site.email}</span>}
         </div>
 
-        <div className="flex flex-col gap-2 text-sm text-ink-soft">
+        <div className="flex flex-col gap-3 text-sm text-ink-soft">
           <span className="mb-1 font-mono text-xs uppercase tracking-wide text-ink-faint">Follow us, we&apos;re friendly</span>
           {hasSocials ? (
-            <>
+            <div className="flex items-center gap-3">
               {site.instagramUrl && (
-                <a href={site.instagramUrl} target="_blank" rel="noopener noreferrer" className="hover:text-ink">
-                  Instagram
+                <a
+                  href={site.instagramUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="Instagram"
+                  className="flex h-9 w-9 items-center justify-center rounded-full border border-line text-ink-soft transition-colors hover:border-accent-ink hover:text-accent-ink"
+                >
+                  <InstagramIcon className="h-4.5 w-4.5" />
+                </a>
+              )}
+              {site.facebookUrl && (
+                <a
+                  href={site.facebookUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="Facebook"
+                  className="flex h-9 w-9 items-center justify-center rounded-full border border-line text-ink-soft transition-colors hover:border-accent-ink hover:text-accent-ink"
+                >
+                  <FacebookIcon className="h-4.5 w-4.5" />
                 </a>
               )}
               {site.whatsappNumber && (
@@ -43,12 +62,13 @@ export function SiteFooter() {
                   href={`https://wa.me/${site.whatsappNumber}`}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="hover:text-ink"
+                  aria-label="WhatsApp"
+                  className="flex h-9 w-9 items-center justify-center rounded-full border border-line text-ink-soft transition-colors hover:border-accent-ink hover:text-accent-ink"
                 >
-                  WhatsApp
+                  <WhatsappIcon className="h-4.5 w-4.5" />
                 </a>
               )}
-            </>
+            </div>
           ) : (
             <span className="text-ink-faint">Connects in pitch demo</span>
           )}
