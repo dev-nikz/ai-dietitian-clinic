@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { AnimatePresence, motion } from "motion/react";
 import { getSiteContent } from "@/lib/site-config";
 import { mediaSrc } from "@/lib/media";
 
@@ -25,6 +26,12 @@ const MORE_LINKS = [
   { href: "/contact", label: "Contact Us" },
   { href: "/online-payment", label: "Online Payment" },
 ];
+
+// Shared duration/easing so the icon morph and the panel it opens read as
+// one motion, not two unrelated ones. Motion honors MotionConfig's
+// reducedMotion="user" from the root layout automatically, so this respects
+// prefers-reduced-motion for free — same as the rest of the site's animation.
+const PANEL_TRANSITION = { duration: 0.22, ease: [0.16, 1, 0.3, 1] as const };
 
 export function SiteHeader() {
   const site = getSiteContent();
@@ -65,72 +72,112 @@ export function SiteHeader() {
             onClick={() => setOpen((v) => !v)}
             className="flex h-10 w-10 items-center justify-center rounded-full text-bg hover:bg-bg/10"
           >
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
-              {open ? <path d="M6 6l12 12M18 6L6 18" /> : <path d="M4 7h16M4 12h16M4 17h16" />}
-            </svg>
+            {/* Three-line hamburger that morphs into an X — each bar is its
+                own element so it can rotate/translate/fade independently,
+                instead of swapping two unrelated <path>s with a hard cut. */}
+            <span className="relative flex h-4 w-5 flex-col justify-between">
+              <span
+                aria-hidden
+                className={`h-0.5 w-full origin-center rounded-full bg-current transition-transform duration-300 ease-out ${
+                  open ? "translate-y-[7px] rotate-45" : ""
+                }`}
+              />
+              <span
+                aria-hidden
+                className={`h-0.5 w-full rounded-full bg-current transition-opacity duration-200 ease-out ${
+                  open ? "opacity-0" : "opacity-100"
+                }`}
+              />
+              <span
+                aria-hidden
+                className={`h-0.5 w-full origin-center rounded-full bg-current transition-transform duration-300 ease-out ${
+                  open ? "-translate-y-[7px] -rotate-45" : ""
+                }`}
+              />
+            </span>
           </button>
         </div>
 
         {/* Desktop: burger opens a compact dropdown with the secondary links,
             since Services/About/Ask AI/Enroll + Book are already in the bar. */}
-        {open && (
-          <div className="absolute right-6 top-full z-50 hidden w-64 overflow-hidden rounded-2xl border border-bg/10 bg-ink shadow-xl md:block">
-            <nav className="flex flex-col py-2 text-sm font-semibold uppercase tracking-wide text-bg/80">
-              {MORE_LINKS.map((link) => (
-                <Link
-                  key={link.href}
-                  href={link.href}
-                  onClick={() => setOpen(false)}
-                  className="px-4 py-2.5 hover:bg-bg/10 hover:text-bg"
-                >
-                  {link.label}
-                </Link>
-              ))}
-            </nav>
-          </div>
-        )}
+        <AnimatePresence>
+          {open && (
+            <motion.div
+              key="desktop-menu"
+              initial={{ opacity: 0, y: -8, scale: 0.98 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              exit={{ opacity: 0, y: -8, scale: 0.98 }}
+              transition={PANEL_TRANSITION}
+              className="absolute right-6 top-full z-50 hidden w-64 origin-top-right overflow-hidden rounded-2xl border border-bg/10 bg-ink shadow-xl md:block"
+            >
+              <nav className="flex flex-col py-2 text-sm font-semibold uppercase tracking-wide text-bg/80">
+                {MORE_LINKS.map((link) => (
+                  <Link
+                    key={link.href}
+                    href={link.href}
+                    onClick={() => setOpen(false)}
+                    className="px-4 py-2.5 hover:bg-bg/10 hover:text-bg"
+                  >
+                    {link.label}
+                  </Link>
+                ))}
+              </nav>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </div>
 
       {/* Mobile: burger opens the full-screen stacked menu (primary + secondary + book). */}
-      {open && (
-        <div className="max-h-[calc(100vh-56px)] overflow-y-auto border-t border-bg/10 bg-ink px-6 pb-6 pt-2 md:hidden">
-          <nav className="flex flex-col gap-1 text-sm font-semibold uppercase tracking-wide text-bg/80">
-            {NAV_LINKS.map((link) => (
-              <Link
-                key={link.href}
-                href={link.href}
-                onClick={() => setOpen(false)}
-                className="rounded-lg px-2 py-2.5 hover:bg-bg/10 hover:text-bg"
-              >
-                {link.label}
-              </Link>
-            ))}
-          </nav>
-
-          <div className="mt-3 border-t border-bg/10 pt-3">
-            <nav className="flex flex-col gap-1 text-sm font-semibold uppercase tracking-wide text-bg/60">
-              {MORE_LINKS.map((link) => (
-                <Link
-                  key={link.href}
-                  href={link.href}
-                  onClick={() => setOpen(false)}
-                  className="rounded-lg px-2 py-2.5 hover:bg-bg/10 hover:text-bg"
-                >
-                  {link.label}
-                </Link>
-              ))}
-            </nav>
-          </div>
-
-          <Link
-            href="/#book"
-            onClick={() => setOpen(false)}
-            className="mt-4 block rounded-full bg-accent px-5 py-3 text-center text-xs font-semibold uppercase tracking-wide text-white"
+      <AnimatePresence>
+        {open && (
+          <motion.div
+            key="mobile-menu"
+            initial={{ height: 0, opacity: 0 }}
+            animate={{ height: "auto", opacity: 1 }}
+            exit={{ height: 0, opacity: 0 }}
+            transition={PANEL_TRANSITION}
+            className="overflow-hidden border-t border-bg/10 bg-ink md:hidden"
           >
-            Book a consultation
-          </Link>
-        </div>
-      )}
+            <div className="max-h-[calc(100vh-56px)] overflow-y-auto px-6 pb-6 pt-2">
+              <nav className="flex flex-col gap-1 text-sm font-semibold uppercase tracking-wide text-bg/80">
+                {NAV_LINKS.map((link) => (
+                  <Link
+                    key={link.href}
+                    href={link.href}
+                    onClick={() => setOpen(false)}
+                    className="rounded-lg px-2 py-2.5 hover:bg-bg/10 hover:text-bg"
+                  >
+                    {link.label}
+                  </Link>
+                ))}
+              </nav>
+
+              <div className="mt-3 border-t border-bg/10 pt-3">
+                <nav className="flex flex-col gap-1 text-sm font-semibold uppercase tracking-wide text-bg/60">
+                  {MORE_LINKS.map((link) => (
+                    <Link
+                      key={link.href}
+                      href={link.href}
+                      onClick={() => setOpen(false)}
+                      className="rounded-lg px-2 py-2.5 hover:bg-bg/10 hover:text-bg"
+                    >
+                      {link.label}
+                    </Link>
+                  ))}
+                </nav>
+              </div>
+
+              <Link
+                href="/#book"
+                onClick={() => setOpen(false)}
+                className="mt-4 block rounded-full bg-accent px-5 py-3 text-center text-xs font-semibold uppercase tracking-wide text-white"
+              >
+                Book a consultation
+              </Link>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </header>
   );
 }
