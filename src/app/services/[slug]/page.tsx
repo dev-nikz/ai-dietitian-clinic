@@ -1,9 +1,11 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
 import { services } from "@/lib/site-config";
+import { serviceImageSrc } from "@/lib/media";
 
 export function generateStaticParams() {
   return services.map((s) => ({ slug: s.slug }));
@@ -35,12 +37,19 @@ export default async function ServiceDetailPage({
   const { slug } = await params;
   const service = findService(slug);
   if (!service) notFound();
+  const image = serviceImageSrc(service.slug);
 
   return (
     <>
       <SiteHeader />
       <main className="flex-1">
         <section className="border-b border-line bg-surface-2">
+          {image && (
+            <div className="relative h-48 w-full overflow-hidden md:h-64">
+              <Image src={image} alt={service.title} fill sizes="100vw" className="object-cover" priority />
+              <div className="absolute inset-0 bg-gradient-to-t from-ink/60 via-ink/10 to-transparent" />
+            </div>
+          )}
           <div className="mx-auto max-w-3xl px-6 py-16 md:py-20">
             <Link href="/#services" className="text-sm font-medium text-ink-soft hover:text-accent-ink">
               ← All services
