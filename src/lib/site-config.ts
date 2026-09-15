@@ -1,14 +1,16 @@
 import { siteMode } from "./site-mode";
 
 // -----------------------------------------------------------------------
-// SAFETY MODEL
-// This file is committed to the PUBLIC repo, so every value that could
-// identify the real pitch client (name, clinic, address, phone, bio
-// specifics) must never be hardcoded here — not even inside a "pitch"
-// branch. Real values are read from NEXT_PUBLIC_PITCH_* env vars, which
-// live only in the gitignored .env.local. If those vars are absent
-// (e.g. anyone who clones the public repo, or portfolio mode itself),
-// every field silently falls back to the generic portfolio copy below.
+// CONTENT MODEL
+// pitchContent below is the real client's content (Neha's Diet Centre) —
+// deliberately committed to this public repo. That's an explicit choice
+// made with the project owner, not an oversight: this repo doubles as a
+// live pitch demo shown directly to the client, so the real branding,
+// address, phone, bio and photography (public/images/pitch/) live in git
+// history the same as any other tracked asset. portfolioContent below is
+// the generic fallback, used only when NEXT_PUBLIC_SITE_MODE is explicitly
+// set to "portfolio" (see site-mode.ts) — e.g. for someone reusing this
+// codebase as a template who doesn't want the real client's content.
 // -----------------------------------------------------------------------
 
 type Credential = { value: string; label: string };
@@ -68,54 +70,43 @@ const portfolioContent: SiteContent = {
   practoConnected: false,
 };
 
-// Reads a NEXT_PUBLIC_PITCH_* var; falls back to the matching portfolio
-// value whenever the var is missing or empty (public clone, or portfolio mode).
-function pitchStr(envValue: string | undefined, fallback: string): string {
-  return envValue && envValue.trim().length > 0 ? envValue : fallback;
-}
-
-function pitchCredentials(): Credential[] {
-  const raw = process.env.NEXT_PUBLIC_PITCH_CREDENTIALS_JSON;
-  if (!raw) return portfolioContent.credentials;
-  try {
-    const parsed = JSON.parse(raw);
-    if (Array.isArray(parsed) && parsed.every((c) => c && typeof c.value === "string" && typeof c.label === "string")) {
-      return parsed as Credential[];
-    }
-  } catch {
-    // fall through to generic
-  }
-  return portfolioContent.credentials;
-}
-
-function pitchList(raw: string | undefined, fallback: string[]): string[] {
-  if (!raw) return fallback;
-  const items = raw.split("|").map((s) => s.trim()).filter(Boolean);
-  return items.length > 0 ? items : fallback;
-}
-
-function pitchContent(): SiteContent {
-  const env = process.env;
-  return {
-    brandName: pitchStr(env.NEXT_PUBLIC_PITCH_BRAND_NAME, portfolioContent.brandName),
-    eyebrow: pitchStr(env.NEXT_PUBLIC_PITCH_EYEBROW, portfolioContent.eyebrow),
-    tagline: pitchStr(env.NEXT_PUBLIC_PITCH_TAGLINE, portfolioContent.tagline),
-    heroLead: pitchStr(env.NEXT_PUBLIC_PITCH_HERO_LEAD, portfolioContent.heroLead),
-    credentials: pitchCredentials(),
-    aboutBio: pitchList(env.NEXT_PUBLIC_PITCH_ABOUT_BIO, portfolioContent.aboutBio),
-    aboutHighlights: pitchList(env.NEXT_PUBLIC_PITCH_ABOUT_HIGHLIGHTS, portfolioContent.aboutHighlights),
-    address: pitchStr(env.NEXT_PUBLIC_PITCH_ADDRESS, portfolioContent.address),
-    phoneDisplay: pitchStr(env.NEXT_PUBLIC_PITCH_PHONE_DISPLAY, portfolioContent.phoneDisplay),
-    email: pitchStr(env.NEXT_PUBLIC_PITCH_EMAIL, portfolioContent.email),
-    whatsappNumber: pitchStr(env.NEXT_PUBLIC_PITCH_WHATSAPP_NUMBER, portfolioContent.whatsappNumber),
-    instagramUrl: pitchStr(env.NEXT_PUBLIC_PITCH_INSTAGRAM_URL, portfolioContent.instagramUrl),
-    facebookUrl: pitchStr(env.NEXT_PUBLIC_PITCH_FACEBOOK_URL, portfolioContent.facebookUrl),
-    practoConnected: env.NEXT_PUBLIC_PITCH_PRACTO_CONNECTED === "true",
-  };
-}
+const pitchContent: SiteContent = {
+  brandName: "Neha's Diet Centre",
+  eyebrow: "Neha's Diet Centre · Nutritionist & Clinical Dietitian",
+  tagline: "No Starving Diets, No Monotonous Diets, No Strenuous Exercises, No Medicines",
+  heroLead:
+    "Clinical nutrition built on published research, not a generic meal plan — from a PhD dietitian trained at Delhi University, INMAS, and AIIMS Hospital.",
+  credentials: [
+    { value: "PhD", label: "Nutrition, Delhi University / AIIMS" },
+    { value: "50-60", label: "Patients / Day" },
+    { value: "Lady Irwin", label: "College, Delhi University" },
+    { value: "Singapore", label: "Advanced Bariatric Training" },
+  ],
+  aboutBio: [
+    "Neha grew up in a family of doctors in Delhi and was head girl at New Era Public School, picking up distinction certificates in physics, chemistry and biology along the way. She read for a B.Sc (Hons) in Home Science at Lady Irwin College, Delhi University, then a master's in Therapeutic Nutrition at the Institute of Home Economics, earning recognition for her dissertation and her work in food science and microbiology. Outside the classroom she competed in dance and street theatre — a Durga Deulkar award for one-act and street play, performances for UNFPA and the Urdu Academy among them — and was recognised for poster design as well.",
+    "Her doctoral research ran jointly across Delhi University, INMAS and AIIMS Hospital, guided by Dr. Seema Puri, Dr. Kumud Khanna, Dr. R.K. Marwaha and Dr. Nikhil Tandon, and looked at how nutrition and lifestyle shape bone mineral health in Delhi schoolgirls — work that fed directly into public-health thinking on the subject.",
+    "Before opening her own practice she trained widely: institutional food service and therapeutic-diet planning at Sir Ganga Ram Hospital; large-scale food preparation and preservation methods under the Ministry of Human Resource Development's Food & Nutrition Board; and a project on breastfeeding after caesarean delivery at NIPCCD. She then worked as a consultant nutritionist across a physiotherapy clinic, a slimming centre and a nursing home in Rajouri Garden, handling therapeutic and weight-management cases, spent a spell with the NGO Streebal on women's empowerment, and coordinated the UGC-funded midday meal programme as a training and research officer.",
+    "She has taught as well as practised — guest lecturing on foods and nutrition at VLCC Academy, taking practical classes for IGNOU's M.Sc students, examining Clinical Nutrition papers externally, and spending a year as guest associate faculty in the Foods & Nutrition department at IHE College, Delhi University. Today she runs Neha's Diet Centre, seeing 50-60 patients a day for weight loss, weight gain, child health and therapeutic diets, with further training in pediatric and bariatric nutrition from Singapore.",
+  ],
+  aboutHighlights: [
+    "PhD research at Delhi University, INMAS & AIIMS Hospital",
+    "B.Sc (Hons) & M.Sc, Lady Irwin College / Institute of Home Economics",
+    "Advanced training in Pediatric & Bariatric Nutrition, Singapore",
+    "Published research on bone mineral density & Vitamin D status",
+    "Seeing 50–60 patients a day at Neha's Diet Centre",
+    "Former visiting faculty, IHE College; guest lecturer, VLCC Academy",
+  ],
+  address: "Amit Nursing Home, A-4 Manak Vihar Ext, Near Pacific Mall, Opp. Block 2 Subhash Nagar, New Delhi 110018",
+  phoneDisplay: "+91-9911558170 · 011-28126894 · 011-28122149 · +91-7289 9782 30",
+  email: "neha141980@yahoo.co.in",
+  whatsappNumber: "919911558170",
+  instagramUrl: "https://www.instagram.com/dr.neha_agarwal/",
+  facebookUrl: "",
+  practoConnected: false,
+};
 
 export function getSiteContent(): SiteContent {
-  return siteMode === "pitch" ? pitchContent() : portfolioContent;
+  return siteMode === "portfolio" ? portfolioContent : pitchContent;
 }
 
 // Service categories are generic clinical offerings, not identifying —

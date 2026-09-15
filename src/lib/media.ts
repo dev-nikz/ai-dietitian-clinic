@@ -2,9 +2,8 @@ import { siteMode } from "./site-mode";
 import { services } from "./site-config";
 
 // Components should always import from here, never hardcode an image path.
-// "portfolio" mode (default, public repo) serves the committed placeholder.
-// "pitch" mode serves real client images from public/images/pitch/, which is
-// gitignored at the repo root so real photos never enter git history.
+// Defaults to the real client's photography (pitch mode — see site-mode.ts);
+// "portfolio" mode serves the generic committed placeholder instead.
 const paths = {
   headshot: {
     portfolio: "/images/placeholder/headshot.svg",
@@ -24,10 +23,7 @@ export function mediaSrc(key: keyof typeof paths): string {
   return paths[key][siteMode];
 }
 
-// Per-service photography. Pitch mode only — these are the client's own
-// licensed images, not free-to-redistribute assets, so the public/portfolio
-// build never references them and the cards fall back to the gradient-only
-// design instead.
+// Per-service photography — real client photos, pitch mode only.
 const serviceSlugs = new Set(services.map((s) => s.slug));
 
 export function serviceImageSrc(slug: string): string {
