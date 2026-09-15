@@ -24,7 +24,7 @@ export function Hero() {
               fill
               sizes="100vw"
               priority
-              className="object-cover object-[68%_38%]"
+              className="object-cover object-[32%_38%]"
             />
           </div>
           {/* Desktop: solid on the left where the text sits, fading into the
@@ -38,6 +38,26 @@ export function Hero() {
             aria-hidden
             className="absolute inset-0 -z-10 bg-gradient-to-b from-bg via-bg/92 via-45% to-bg/40 md:hidden"
           />
+          {/* Dr. Neha's portrait, floating on top of the background photo —
+              same framed-card treatment the site used before the photo
+              background was added. Hidden on the smallest phones so it
+              doesn't crowd the CTAs; visible from sm: up. */}
+          <motion.div
+            initial={{ opacity: 0, y: 18 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7, delay: 0.3, ease: EASE }}
+            className="absolute bottom-6 right-6 z-10 hidden aspect-[4/5] w-32 sm:block sm:w-40 md:bottom-12 md:right-12 md:w-56"
+          >
+            <div className="relative h-full w-full overflow-hidden rounded-2xl border-2 border-bg bg-surface-2 shadow-[0_10px_28px_rgba(23,37,31,0.18)]">
+              <Image
+                src={mediaSrc("headshot")}
+                alt={site.brandName}
+                fill
+                sizes="(min-width: 768px) 224px, 128px"
+                className="object-cover"
+              />
+            </div>
+          </motion.div>
         </>
       ) : (
         // Portfolio mode: no real photo, keep the original soft sunlight wash.

@@ -39,7 +39,7 @@ export function SiteHeader() {
   const [open, setOpen] = useState(false);
 
   return (
-    <header className="sticky top-0 z-40 bg-ink">
+    <header className="sticky top-0 z-40 bg-accent">
       <div className="relative mx-auto flex max-w-6xl items-center justify-between px-6 py-3.5">
         <Link href="/" className="flex items-center gap-2.5" onClick={() => setOpen(false)}>
           {logoSrc ? (
@@ -60,7 +60,7 @@ export function SiteHeader() {
         <div className="flex items-center gap-2">
           <Link
             href="/#book"
-            className="hidden rounded-full bg-accent px-5 py-2.5 text-xs font-semibold uppercase tracking-wide text-white transition-transform hover:-translate-y-0.5 md:inline-block"
+            className="hidden rounded-full bg-ink px-5 py-2.5 text-xs font-semibold uppercase tracking-wide text-white transition-transform hover:-translate-y-0.5 md:inline-block"
           >
             Book a consultation
           </Link>
@@ -108,7 +108,7 @@ export function SiteHeader() {
               animate={{ opacity: 1, y: 0, scale: 1 }}
               exit={{ opacity: 0, y: -8, scale: 0.98 }}
               transition={PANEL_TRANSITION}
-              className="absolute right-6 top-full z-50 hidden w-64 origin-top-right overflow-hidden rounded-2xl border border-bg/10 bg-ink shadow-xl md:block"
+              className="absolute right-6 top-full z-50 hidden w-64 origin-top-right overflow-hidden rounded-2xl border border-bg/10 bg-accent shadow-xl md:block"
             >
               <nav className="flex flex-col py-2 text-sm font-semibold uppercase tracking-wide text-bg/80">
                 {MORE_LINKS.map((link) => (
@@ -136,7 +136,7 @@ export function SiteHeader() {
             animate={{ height: "auto", opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
             transition={PANEL_TRANSITION}
-            className="overflow-hidden border-t border-bg/10 bg-ink md:hidden"
+            className="overflow-hidden border-t border-bg/10 bg-accent md:hidden"
           >
             <div className="max-h-[calc(100vh-56px)] overflow-y-auto px-6 pb-6 pt-2">
               <nav className="flex flex-col gap-1 text-sm font-semibold uppercase tracking-wide text-bg/80">
@@ -170,7 +170,7 @@ export function SiteHeader() {
               <Link
                 href="/#book"
                 onClick={() => setOpen(false)}
-                className="mt-4 block rounded-full bg-accent px-5 py-3 text-center text-xs font-semibold uppercase tracking-wide text-white"
+                className="mt-4 block rounded-full bg-ink px-5 py-3 text-center text-xs font-semibold uppercase tracking-wide text-white"
               >
                 Book a consultation
               </Link>
