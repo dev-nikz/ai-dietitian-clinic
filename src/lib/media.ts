@@ -17,6 +17,10 @@ const paths = {
     portfolio: "", // no logo image in portfolio mode — header falls back to text wordmark
     pitch: "/images/pitch/logo.png",
   },
+  heroBackground: {
+    portfolio: "", // no real interior photo in portfolio mode — hero falls back to the plain wash
+    pitch: "/images/pitch/hero-bg.jpg",
+  },
 } as const;
 
 export function mediaSrc(key: keyof typeof paths): string {
