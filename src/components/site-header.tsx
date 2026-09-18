@@ -49,7 +49,7 @@ export function SiteHeader() {
           )}
         </Link>
 
-        <nav className="hidden items-center gap-8 text-xs font-semibold uppercase tracking-wide text-bg/70 md:flex">
+        <nav className="hidden items-center gap-8 text-xs font-bold uppercase tracking-wide text-bg/90 md:flex">
           {NAV_LINKS.map((link) => (
             <Link key={link.href} href={link.href} className="hover:text-bg">
               {link.label}
@@ -139,7 +139,7 @@ export function SiteHeader() {
             className="overflow-hidden border-t border-bg/10 bg-accent md:hidden"
           >
             <div className="max-h-[calc(100vh-56px)] overflow-y-auto px-6 pb-6 pt-2">
-              <nav className="flex flex-col gap-1 text-sm font-semibold uppercase tracking-wide text-bg/80">
+              <nav className="flex flex-col gap-1 text-sm font-bold uppercase tracking-wide text-bg/90">
                 {NAV_LINKS.map((link) => (
                   <Link
                     key={link.href}
