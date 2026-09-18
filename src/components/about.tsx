@@ -19,12 +19,12 @@ export function About() {
         </ScrollReveal>
 
         <ScrollReveal delay={0.08} className="md:col-start-3 md:row-span-2 md:row-start-1">
-          <div className="relative mx-auto aspect-[3/4] w-full max-w-[220px] overflow-hidden rounded-2xl border border-line bg-surface-2">
+          <div className="relative mx-auto aspect-[3/4] w-full max-w-[300px] overflow-hidden rounded-2xl border border-line bg-surface-2">
             <Image
               src={mediaSrc("aboutPhoto")}
               alt={site.brandName}
               fill
-              sizes="220px"
+              sizes="300px"
               className="object-cover object-top"
             />
           </div>
